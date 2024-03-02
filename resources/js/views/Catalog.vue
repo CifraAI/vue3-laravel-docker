@@ -1,12 +1,14 @@
 <template>
     <h1>Catalog</h1>
 
-    <button @click="load" v-if="migrations.length === 0">Load data from server</button>
+    <button @click="load" v-if="products.length === 0">Load data from server</button>
 
-    <div class="server-response" v-if="migrations.length > 0">
+    <div class="server-response" v-if="products.length > 0">
         <h2>Data from server:</h2>
         <ul>
-            <li v-for="item in migrations" :key="item.id">{{ item.migration }}</li>
+            <li v-for="item in products" :key="item.id">
+                <router-link :to="{ name: 'Product', params: { id: item.id } }">{{ item.title }}</router-link>
+            </li>
         </ul>
     </div>
 
@@ -19,29 +21,29 @@ axios.defaults.withCredentials = true
 import {ref} from "vue";
 
 export default {
-    name: 'Hello',
+    name: 'Catalog',
 
-    created() {
+    beforeCreate() {
         this.load()
     },
 
     setup() {
 
-        const migrations = ref([])
+        const products = ref([])
 
         function onSuccess(response) {
-            migrations.value = response.data;
+            products.value = response.data.products;
         }
 
         function load() {
-            axios.get('/api/migration')
+            axios.get('/api/products')
                 .then(onSuccess)
                 .catch((error) => { alert(`Error ${error.message}`) })
         }
 
         return {
             load,
-            migrations
+            products
         }
     }
 }

@@ -23,6 +23,7 @@ Route::get('migration', function () {
     return DB::table('migrations')->get();
 });
 
-Route::get('products', function () {
-    return DB::table('migrations')->get();
-});
+/*
+ * Products Routes
+ */
+Route::resource('products', App\Http\Controllers\ProductController::class);
