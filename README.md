@@ -1,6 +1,12 @@
 # Laravel и Vue (c Vite) на одном домене
 
-## Запуск
+## Запуск командой
+
+```bash
+make install
+```
+
+## Запуск ручной
 
 Добавить в /etc/hosts запись:
 
@@ -35,7 +41,7 @@ docker compose exec backend php artisan key:generate
 Выполнить миграции:
 
 ```
-docker compose exec backend php artisan migrate
+docker compose exec backend php artisan migrate:refresh --seed
 ```
 
 Открыть в браузере http://vue3-laravel-app.local
